@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AB4YOU">
 <style>*{-webkit-tap-highlight-color:transparent} body{margin:0;font-size:14px} img{max-width:100%}</style>
 <title>AB4YOU Accesso SCADA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -218,6 +226,23 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
 .alt-hint { left: 0; width: 375px; top: 696px; text-align: center; font-size: 14px; line-height: 20px; color: #4B5563; }
 .remote-light { left: 20px; top: 722px; width: 335px; height: 56px; border: 1px solid #1A1414; border-radius: 12px; gap: 12px; font-size: 18px; font-weight: 500; color: #1A1414; background: #fff; }
 @media (prefers-reduced-motion: reduce) { .screen, .screen.active, .drawer, .sheet, .snack, .err-inline { transition: none; } .scanning .scanline { animation: none; } }
+/* ---------- app mode (installed on the phone, or ?app) ---------- */
+.app-only { display: none !important; }
+html.app, html.app body { height: 100%; overflow: hidden; overscroll-behavior: none; background: #000; }
+html.app .layout { display: block; padding: 0; min-height: 0; height: 100%; }
+html.app .phone-slot { position: absolute; left: 0; top: 0; }
+html.app .bezel { width: auto; padding: 0; border-radius: 0; box-shadow: none; background: transparent; }
+html.app .device { border-radius: 0; }
+html.app .app-only { display: block !important; }
+html.app .guide { position: fixed; inset: 0; z-index: 100; width: auto; max-width: none; overflow-y: auto; background: var(--page);
+  padding: calc(16px + env(safe-area-inset-top, 0px)) 20px calc(32px + env(safe-area-inset-bottom, 0px)); box-sizing: border-box;
+  transform: translateY(100%); visibility: hidden; transition: transform .25s ease-out, visibility 0s linear .25s; }
+html.app.guide-open .guide { transform: none; visibility: visible; transition: transform .25s ease-out; }
+.app-hot { all: unset; position: absolute; left: 0; top: 0; width: 100%; height: 44px; z-index: 40; }
+.guide-close { all: unset; cursor: pointer; align-self: flex-end; padding: 8px 14px; border-radius: 8px; background: var(--accent); color: var(--on-accent); font-size: 14px; font-weight: 500; }
+.install-hint { display: block; }
+html.app .install-hint { display: none; }
+
 </style>
 </head>
 <body>
@@ -226,6 +251,7 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
   <div class="phone-slot" id="slot">
     <div class="bezel" id="bezel">
       <div class="device" id="device">
+        <button class="app-hot app-only" id="appHot" aria-label="Apri le impostazioni del prototipo"></button>
 
         <!-- 01 Dashboard + menu -->
         <section class="screen active" data-screen="dash" data-fl="single" aria-label="Dashboard">
@@ -383,7 +409,8 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
     </div>
   </div>
 
-  <aside class="guide">
+  <aside class="guide" id="guide">
+    <button class="guide-close app-only" id="guideClose">Torna all'app</button>
     <div>
       <div class="eyebrow">AB4YOU · prototipo · v6</div>
       <h1>Accesso allo SCADA</h1>
@@ -430,12 +457,19 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
       <div class="note">Scura è la proposta finale; fasce bianche è l'alternativa allo scan. Il flash parte disattivato: ogni tocco passa a On, poi Auto, poi di nuovo Off.</div>
       <button class="row-btn" id="restart">Ricomincia dalla dashboard</button>
     </div>
+    <div class="block install-hint">
+      <h2>Sul telefono</h2>
+      <div class="note">Apri questo link con Chrome sul telefono Android e tocca <strong>Installa app</strong> (oppure menu ⋮ → <strong>Aggiungi a schermata Home</strong>). Su iPhone: Safari → Condividi → <strong>Aggiungi alla schermata Home</strong>. L'app si apre a tutto schermo; tocca due volte la barra in alto (l'ora) per aprire queste impostazioni.</div>
+    </div>
+    <p class="note app-only">Tocca due volte la barra in alto (l'ora) per riaprire queste impostazioni.</p>
     <p class="note">Il font è Euclid Square se è installato sul computer; altrimenti compare un font simile.</p>
   </aside>
 </div>
 
 <script>
 (() => {
+  const APP = matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches || new URLSearchParams(location.search).has('app');
+  if (APP) document.documentElement.classList.add('app');
   const device = document.getElementById('device');
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -643,6 +677,14 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
   // fit the phone to the window
   const slot = document.getElementById('slot'), bezel = document.getElementById('bezel');
   function fit() {
+    if (APP) {
+      const w = window.innerWidth, h = window.innerHeight;
+      const s = Math.min(w / 375, h / 812);
+      bezel.style.transform = `scale(${s})`;
+      device.style.height = Math.max(812, h / s) + 'px';
+      slot.style.left = (w - 375 * s) / 2 + 'px';
+      return;
+    }
     const W = 375 + 24, H = 812 + 24;
     const narrow = window.innerWidth <= 640;
     const guide = document.querySelector('.guide');
@@ -654,6 +696,19 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
     slot.style.width = W * s + 'px'; slot.style.height = H * s + 'px';
   }
   window.addEventListener('resize', fit); fit();
+
+  // app mode: double tap on the status bar opens the prototype settings
+  if (APP) {
+    const root = document.documentElement;
+    let lastTap = 0;
+    document.getElementById('appHot').addEventListener('click', () => {
+      const now = Date.now();
+      if (now - lastTap < 400) { root.classList.add('guide-open'); lastTap = 0; } else lastTap = now;
+    });
+    document.getElementById('guideClose').addEventListener('click', () => root.classList.remove('guide-open'));
+    $$('#guide [data-jump], #restart').forEach(b => b.addEventListener('click', () => root.classList.remove('guide-open')));
+  }
+  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
   go('dash');
 })();
 </script>
