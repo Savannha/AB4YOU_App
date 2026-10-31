@@ -320,7 +320,7 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
 .inv-bar { position: absolute; left: 0; right: 0; bottom: 0; padding: 24px 22px 40px 23px; background: linear-gradient(rgba(255,255,255,0), #fff 24px); z-index: 4; }
 .btn.primary:disabled, .btn.primary[aria-disabled="true"] { background: #CDD1D4; cursor: default; }
 .sent { background: #fff; }
-.sent .plane { left: 112px; top: 309px; }
+.sent .plane { left: 73px; top: 157px; width: 230px; height: 230px; }
 .sent .h { left: 0; width: 375px; top: 500px; text-align: center; font-size: 20px; line-height: 26px; font-weight: 600; color: #1A1414; }
 .sent .m { left: 0; width: 375px; top: 532px; text-align: center; font-size: 14px; line-height: 20px; color: #1A1414; }
 .sent .go-on { left: 22px; width: 331px; top: 668px; height: 50px; }
@@ -552,7 +552,7 @@ html.app .install-hint { display: none; }
         <!-- 07 Invitation sent -->
         <section class="screen sent" data-screen="sent" aria-label="Invito inviato">
           <div class="status"></div>
-          <svg class="abs plane" width="105" height="63" viewBox="0 0 105 63" fill="#E60000" aria-hidden="true"><path d="M0 1 104 15 14 25Z"/><path d="M20 33 101 17 36 62Z"/></svg>
+          <img class="abs plane" id="sentGif" src="send.gif" width="230" height="230" alt="">
           <div class="abs h">Invitation sent to</div>
           <div class="abs m" id="sentTo"></div>
           <button class="hit btn primary go-on" data-inv="continue">Continue</button>
@@ -617,7 +617,9 @@ html.app .install-hint { display: none; }
         <button data-fill="marco.debernardi@gmail.com" aria-pressed="false">Email valida</button>
         <button data-fill="MarcoDebernardi@gmail.om" aria-pressed="false">Formato errato</button>
         <button data-fill="bianca.rossi@abgroup.com" aria-pressed="false">Già invitato</button>
+        <button data-fill="paolo.rossi@abgroup.com" data-partial aria-pressed="false">Invitato in 1 FL</button>
       </div>
+      <div class="note">Se l'utente è già in tutte le functional location compare «This user has already been invited.». Se manca in qualcuna, l'invito va avanti e mostra solo quelle. «Invitato in 1 FL» toglie Paolo da 00123 e prova a reinvitarlo.</div>
     </div>
 
     <div class="block">
@@ -977,7 +979,7 @@ html.app .install-hint { display: none; }
   const invSec = $('[data-screen="inv"]');
   const invEmail = $('#invEmail'), invErr = $('#invErr'), invBtn = $('[data-inv="invite"]', invSec);
   const TLDS = ['com', 'it', 'net', 'org', 'eu', 'io', 'de', 'fr', 'es', 'ch', 'at', 'co', 'uk', 'info', 'biz'];
-  let invStep = 1, invSel = {};
+  let invStep = 1, invSel = {}, invUser = null;   // invSel: only the locations the user can still be invited to
 
   function emailOk(v) {
     const m = v.trim().match(/^[^ @]+@[^ @]+[.]([a-z]+)$/i);
@@ -992,7 +994,7 @@ html.app .install-hint { display: none; }
     invEmail.classList.toggle('err', !!msg); invRefresh();
   }
   function renderInvFls() {
-    $('#invFlList').innerHTML = Object.keys(FL_NAMES).map(id => `
+    $('#invFlList').innerHTML = Object.keys(invSel).map(id => `
       <div class="ifl${invSel[id].open ? ' open' : ''}">
         <button class="ifl-h" data-inv="fl" data-id="${id}" aria-expanded="${invSel[id].open}">${UI.pin}<span>${FL_NAMES[id]}</span>${UI.chevUp}</button>
         <div class="ifl-rows">${Object.keys(SVC).map(k => `
@@ -1004,6 +1006,7 @@ html.app .install-hint { display: none; }
   function resetInvite(email) {
     invStep = 1;
     invSel = Object.fromEntries(Object.keys(FL_NAMES).map(id => [id, { open: true, ab: false, scada: false }]));
+    invUser = null;
     invEmail.value = email || ''; invEmail.readOnly = false;
     $('#invFls').hidden = true;
     $('[data-inv="back"]', invSec).hidden = false;
@@ -1012,6 +1015,8 @@ html.app .install-hint { display: none; }
     $('#invScroll').scrollTop = 0;
   }
   onEnter.inv = () => resetInvite();
+  // restart the GIF from its first frame every time the invite is sent
+  onEnter.sent = () => { $('#sentGif').src = 'send.gif?t=' + Date.now(); };
 
   invEmail.addEventListener('input', () => setInvErr(''));
   invEmail.addEventListener('keydown', e => { if (e.key === 'Enter' && !invBtn.disabled) invBtn.click(); });
@@ -1024,16 +1029,22 @@ html.app .install-hint { display: none; }
         if (invStep === 1) {
           const v = invEmail.value.trim();
           if (!emailOk(v)) return setInvErr('Incorrect email format');
-          if (users.some(u => u.email.toLowerCase() === v.toLowerCase())) return setInvErr('This user has already been invited.');
+          // an existing user can still be invited to the locations they are not in yet
+          const existing = users.find(u => u.email.toLowerCase() === v.toLowerCase());
+          const missing = Object.keys(FL_NAMES).filter(id => !existing || !existing.fls.some(f => f.id === id));
+          if (!missing.length) return setInvErr('This user has already been invited.');
+          invUser = existing || null;
+          invSel = Object.fromEntries(missing.map(id => [id, { open: true, ab: false, scada: false }]));
           invStep = 2; invEmail.readOnly = true; invEmail.blur();
           $('[data-inv="back"]', invSec).hidden = true;
           $('#invFls').hidden = false; renderInvFls(); invRefresh();
         } else {
-          const picked = Object.keys(FL_NAMES).filter(id => invSel[id].ab || invSel[id].scada);
+          const picked = Object.keys(invSel).filter(id => invSel[id].ab || invSel[id].scada);
           const svcs = id => Object.keys(SVC).filter(k => invSel[id][k]).map(k => `<li>${SVC[k]}</li>`).join('');
           $('[data-b]', invSec).innerHTML = picked.length === 1
             ? `You are about to invite ${esc(invEmail.value.trim())} to ${FL_NAMES[picked[0]]}.<br>The user will have access to:<ul>${svcs(picked[0])}</ul>`
-            : `You are about to invite ${esc(invEmail.value.trim())} to:<ul>${picked.map(id => `<li>${FL_NAMES[id]}<ul>${svcs(id)}</ul></li>`).join('')}</ul>`;
+            : `<span style="color:#111">You are about to invite</span> ${esc(invEmail.value.trim())} to:` + picked.map(id =>
+                `<div style="margin-top:21px">${FL_NAMES[id]}:<br>The user will be granted access to:<ul>${svcs(id)}</ul></div>`).join('');
           invSec.classList.add('sheet-open');
         }
         break;
@@ -1052,7 +1063,11 @@ html.app .install-hint { display: none; }
     const t = e.target.closest('[data-inv]'); if (!t) return;
     if (t.dataset.inv === 'continue') {
       const email = $('#sentTo').textContent;
-      users.push({ email, open: true, fls: Object.keys(FL_NAMES).map(id => ({ id, via: 'invite', svc: { ab: invSel[id].ab, scada: invSel[id].scada } })) });
+      const fls = Object.keys(invSel).map(id => ({ id, via: 'invite', svc: { ab: invSel[id].ab, scada: invSel[id].scada } }));
+      if (invUser && users.includes(invUser)) {
+        invUser.fls.push(...fls);
+        invUser.fls.sort((a, b) => a.id.localeCompare(b.id));
+      } else users.push({ email, open: true, fls });
       users.sort((a, b) => a.email.toLowerCase().localeCompare(b.email.toLowerCase()));
       users.forEach(u => u.open = true);
       go('um');
@@ -1060,6 +1075,12 @@ html.app .install-hint { display: none; }
   });
 
   $$('[data-fill]').forEach(b => b.addEventListener('click', () => {
+    if (b.hasAttribute('data-partial')) {
+      let p = users.find(u => u.email.toLowerCase() === b.dataset.fill);
+      if (!p) { p = seedUsers().find(u => u.email.toLowerCase() === b.dataset.fill); users.push(p); users.sort((a, c) => a.email.toLowerCase().localeCompare(c.email.toLowerCase())); }
+      p.fls = p.fls.filter(f => f.id !== '00123');
+      renderUM();
+    }
     if (current !== 'inv') go('inv');
     resetInvite(b.dataset.fill);
     invRefresh();
