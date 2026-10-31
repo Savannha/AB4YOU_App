@@ -499,9 +499,9 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
   // password screens built from one template
   const tpl = document.getElementById('pwd-tpl');
   const COPY = {
-    qr: { info: 'Vale una sola volta. Se lo SCADA mostra Rigenera, scansiona di nuovo il QR code.',
+    qr: { info: 'La password è valida per 90 secondi. Se nello SCADA compare «Aggiorna QR», premi il pulsante, e scansiona di nuovo il QR code.',
           action: '<svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M10 10l4 4M14 10l-4 4"/></svg>Scansiona di nuovo' },
-    remote: { info: 'Vale una sola volta. Se lo SCADA mostra Rigenera, scansiona di nuovo il QR code.',
+    remote: { info: 'La password è valida per 90 secondi. Se nello SCADA compare «Aggiorna QR», premi il pulsante, copia il nuovo codice e incollalo qui.',
           action: '<svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>Incolla nuovo codice' }
   };
   $$('[data-mode]').forEach(sec => {
