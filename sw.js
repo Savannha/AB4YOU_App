@@ -1,5 +1,5 @@
 // Network first, cache as fallback: the app always shows the latest push when online and still opens offline.
-const CACHE = 'ab4you-scada-v2';
+const CACHE = 'ab4you-scada-v3';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './send.gif'];
 
 self.addEventListener('install', e => {
