@@ -552,7 +552,7 @@ html.app .install-hint { display: none; }
         <!-- 07 Invitation sent -->
         <section class="screen sent" data-screen="sent" aria-label="Invito inviato">
           <div class="status"></div>
-          <img class="abs plane" id="sentGif" src="send.gif" width="230" height="230" alt="">
+          <img class="abs plane" id="sentGif" width="230" height="230" alt="">
           <div class="abs h">Invitation sent to</div>
           <div class="abs m" id="sentTo"></div>
           <button class="hit btn primary go-on" data-inv="continue">Continue</button>
@@ -1015,8 +1015,19 @@ html.app .install-hint { display: none; }
     $('#invScroll').scrollTop = 0;
   }
   onEnter.inv = () => resetInvite();
-  // restart the GIF from its first frame every time the invite is sent
-  onEnter.sent = () => { $('#sentGif').src = 'send.gif?t=' + Date.now(); };
+  // the GIF is loaded once; each invite gets a fresh blob URL so it plays from the first frame,
+  // and stays hidden until that copy is ready (otherwise a cached copy starts first, then restarts)
+  let sentGifBlob = null;
+  fetch('send.gif').then(r => r.blob()).then(b => { sentGifBlob = b; }).catch(() => {});
+  onEnter.sent = () => {
+    const img = $('#sentGif');
+    img.style.visibility = 'hidden';
+    if (img.dataset.url) URL.revokeObjectURL(img.dataset.url);
+    const url = sentGifBlob ? URL.createObjectURL(sentGifBlob) : 'send.gif?t=' + Date.now();
+    img.dataset.url = sentGifBlob ? url : '';
+    img.onload = () => { img.style.visibility = ''; };
+    img.src = url;
+  };
 
   invEmail.addEventListener('input', () => setInvErr(''));
   invEmail.addEventListener('keydown', e => { if (e.key === 'Enter' && !invBtn.disabled) invBtn.click(); });
@@ -1054,21 +1065,27 @@ html.app .install-hint { display: none; }
       case 'confirm':
         invSec.classList.remove('sheet-open');
         $('#sentTo').textContent = invEmail.value.trim();
+        saveInvite();   // saved right away, so inviting someone else without tapping Continue keeps this user
         go('sent');
         break;
     }
   });
 
+  function saveInvite() {
+    const email = invEmail.value.trim();
+    const fls = Object.keys(invSel).filter(id => invSel[id].ab || invSel[id].scada)
+      .map(id => ({ id, via: 'invite', svc: { ab: invSel[id].ab, scada: invSel[id].scada } }));
+    if (invUser && users.includes(invUser)) {
+      invUser.fls.push(...fls);
+      invUser.fls.sort((a, b) => a.id.localeCompare(b.id));
+    } else users.push({ email, open: true, fls });
+    users.sort((a, b) => a.email.toLowerCase().localeCompare(b.email.toLowerCase()));
+    renderUM();
+  }
+
   $('[data-screen="sent"]').addEventListener('click', e => {
     const t = e.target.closest('[data-inv]'); if (!t) return;
     if (t.dataset.inv === 'continue') {
-      const email = $('#sentTo').textContent;
-      const fls = Object.keys(invSel).map(id => ({ id, via: 'invite', svc: { ab: invSel[id].ab, scada: invSel[id].scada } }));
-      if (invUser && users.includes(invUser)) {
-        invUser.fls.push(...fls);
-        invUser.fls.sort((a, b) => a.id.localeCompare(b.id));
-      } else users.push({ email, open: true, fls });
-      users.sort((a, b) => a.email.toLowerCase().localeCompare(b.email.toLowerCase()));
       users.forEach(u => u.open = true);
       go('um');
     } else if (t.dataset.inv === 'again') go('inv');
