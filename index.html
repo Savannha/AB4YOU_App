@@ -1042,8 +1042,8 @@ html.app .install-hint { display: none; }
           const picked = Object.keys(invSel).filter(id => invSel[id].ab || invSel[id].scada);
           const svcs = id => Object.keys(SVC).filter(k => invSel[id][k]).map(k => `<li>${SVC[k]}</li>`).join('');
           $('[data-b]', invSec).innerHTML = picked.length === 1
-            ? `You are about to invite ${esc(invEmail.value.trim())} to ${FL_NAMES[picked[0]]}.<br>The user will have access to:<ul>${svcs(picked[0])}</ul>`
-            : `<span style="color:#111">You are about to invite</span> ${esc(invEmail.value.trim())} to:` + picked.map(id =>
+            ? `You are about to invite<br><span style="white-space:nowrap">${esc(invEmail.value.trim())}</span><br>to ${FL_NAMES[picked[0]]}.<br>The user will have access to:<ul>${svcs(picked[0])}</ul>`
+            : `<span style="color:#111">You are about to invite</span><br><span style="white-space:nowrap">${esc(invEmail.value.trim())} to:</span>` + picked.map(id =>
                 `<div style="margin-top:21px">${FL_NAMES[id]}:<br>The user will be granted access to:<ul>${svcs(id)}</ul></div>`).join('');
           invSec.classList.add('sheet-open');
         }
