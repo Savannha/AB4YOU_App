@@ -226,6 +226,105 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
 .alt-hint { left: 0; width: 375px; top: 696px; text-align: center; font-size: 14px; line-height: 20px; color: #4B5563; }
 .remote-light { left: 20px; top: 722px; width: 335px; height: 56px; border: 1px solid #1A1414; border-radius: 12px; gap: 12px; font-size: 18px; font-weight: 500; color: #1A1414; background: #fff; }
 @media (prefers-reduced-motion: reduce) { .screen, .screen.active, .drawer, .sheet, .snack, .err-inline { transition: none; } .scanning .scanline { animation: none; } }
+/* ---------- user management ---------- */
+.um { background: #F4F6F8; }
+.um .header, .inv .header { z-index: 3; }
+.um-scroll { position: absolute; left: 0; right: 0; top: 100px; bottom: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.um-scroll::-webkit-scrollbar, .inv-scroll::-webkit-scrollbar { display: none; }
+.um-inner { padding: 24px 20px 96px; display: flex; flex-direction: column; }
+.btn-invite { all: unset; box-sizing: border-box; cursor: pointer; height: 56px; border: 1px solid #1A1414; border-radius: 12px; background: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 20px; line-height: 24px; font-weight: 500; color: #1A1414; }
+.btn-invite:active { transform: scale(.99); }
+.um-row { display: flex; justify-content: space-between; align-items: center; height: 28px; margin: 16px 0; }
+.um-row .t { font-size: 16px; line-height: 24px; font-weight: 500; color: #273945; }
+.um-row .t span { font-weight: 400; color: #5B6B78; }
+.toggle-all { all: unset; cursor: pointer; display: flex; align-items: center; gap: 4px; padding: 4px 0 4px 8px; font-size: 14px; line-height: 20px; font-weight: 700; color: #273945; }
+.ucards { display: flex; flex-direction: column; gap: 12px; }
+.ucard { background: #fff; border: 1px solid #D9E1E8; border-radius: 16px; }
+.uhead { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; display: flex; align-items: center; gap: 12px; padding: 16px 12px 16px 16px; }
+.avatar { width: 40px; height: 40px; border-radius: 20px; background: #C5DEFF; color: #0452B0; display: flex; align-items: center; justify-content: center; flex: none; }
+.uid { flex: 1; min-width: 0; }
+.uid .e { font-size: 15px; line-height: 20px; font-weight: 500; color: #273945; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.uid .s { font-size: 12px; line-height: 16px; color: #5B6B78; margin-top: 4px; }
+.uhead .chev { color: #273945; transition: transform .2s; }
+.ucard:not(.open) .uhead .chev { transform: rotate(180deg); }
+.ubody { display: none; }
+.ucard.open .ubody { display: block; }
+.fls { border-top: 1px solid #EAEEF2; padding: 16px; display: flex; flex-direction: column; }
+.fl + .fl { border-top: 1px solid #EAEEF2; margin-top: 16px; padding-top: 16px; }
+.flh { position: relative; display: flex; align-items: center; gap: 8px; height: 32px; }
+.flh .nm { flex: 1; min-width: 0; font-size: 14px; line-height: 20px; font-weight: 500; color: #273945; }
+.more { all: unset; cursor: pointer; width: 32px; height: 32px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #273945; flex: none; }
+.more[aria-expanded="true"], .more:hover { background: #EEF1F4; }
+.chip { display: inline-flex; align-items: center; gap: 8px; height: 28px; padding: 0 12px 0 8px; box-sizing: border-box; border: 1px solid #C4CDD8; border-radius: 8px; font-size: 12px; line-height: 16px; font-weight: 500; color: #273945; margin-top: 12px; }
+.chip svg { color: #0452B0; }
+.svcs { margin-top: 12px; background: #F7F8FA; border-radius: 12px; }
+.svc { display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 12px; font-size: 14px; line-height: 20px; font-weight: 500; color: #273945; }
+.svc + .svc { border-top: 1px solid #EAEEF2; }
+.svc .ico, .srow .ico { width: 32px; height: 32px; border-radius: 8px; background: #FFEDE9; color: #E60000; display: flex; align-items: center; justify-content: center; flex: none; }
+.svcs.none { padding: 18px 16px; font-size: 14px; line-height: 20px; color: #5B6B78; }
+.ufoot { border-top: 1px solid #EAEEF2; display: flex; justify-content: flex-end; padding: 12px 16px; }
+.rm-user { all: unset; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; font-weight: 500; color: #B3261E; }
+.fl-menu { position: absolute; right: 0; top: 36px; width: 264px; box-sizing: border-box; background: #fff; border: 1px solid #D9E1E8; border-radius: 12px; padding: 8px 0; z-index: 5;
+  box-shadow: 0 4px 16px rgba(0,0,0,.16), 0 1px 3px rgba(0,0,0,.08); }
+.fl-menu button { all: unset; box-sizing: border-box; cursor: pointer; width: 100%; height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 14px; line-height: 20px; color: #273945; white-space: nowrap; }
+.fl-menu button:hover { background: #F4F6F8; }
+.fl-menu hr { border: 0; height: 1px; background: #EAEEF2; margin: 8px 0; }
+.fl-menu .danger { color: #B3261E; font-weight: 500; }
+.um-empty { margin-top: 24px; text-align: center; font-size: 14px; line-height: 20px; color: #5B6B78; }
+.um-snack { position: absolute; left: 16px; bottom: 16px; width: 343px; height: 48px; box-sizing: border-box; border-radius: 4px; background: #273945; color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  display: flex; align-items: center; gap: 8px; padding: 4px 4px 4px 16px; font-size: 14px; line-height: 20px; z-index: 20;
+  opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .2s, transform .2s; }
+.um-snack.show { opacity: 1; transform: none; pointer-events: auto; }
+.um-snack span { flex: 1; }
+.snack-x { all: unset; cursor: pointer; width: 40px; height: 40px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #fff; }
+.sheet .btns.row { flex-direction: row; gap: 12px; }
+.sheet .btns.row .btn { flex: 1; }
+.btn.text { color: #273945; }
+.sheet ul { margin: 0; padding-left: 20px; font-size: 14px; line-height: 21px; }
+
+/* invite user */
+.inv { background: #fff; }
+.inv-scroll { position: absolute; left: 0; right: 0; top: 44px; bottom: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.inv-inner { position: relative; padding: 79px 22px 140px 23px; }
+.round { all: unset; cursor: pointer; position: absolute; top: 25px; width: 32px; height: 32px; border-radius: 16px; background: #F2F3F4; color: #273945; display: flex; align-items: center; justify-content: center; }
+.inv h2 { margin: 0; font-size: 28px; line-height: 36px; font-weight: 500; color: #273945; }
+.inv .sub { margin-top: 8px; font-size: 16px; line-height: 22px; color: #1A1414; }
+.inv label { display: block; margin-top: 32px; font-size: 14px; line-height: 18px; font-weight: 500; color: #273945; }
+.inv input { all: unset; box-sizing: border-box; display: block; width: 100%; height: 56px; margin-top: 11px; padding: 0 20px; border: 1px solid #F5F5F5; border-radius: 8px; background: #F5F5F5; font-size: 16px; line-height: 20px; color: #273945; font-family: var(--font); }
+.inv input:focus { border-color: #273945; }
+.inv input::placeholder { color: rgba(39,57,69,.45); }
+.inv input[readonly] { color: rgba(39,57,69,.5); border-color: #F5F5F5; }
+.inv input.err { border-color: #E5484D; }
+.round[hidden] { display: none; }
+.inv-err { margin-top: 8px; font-size: 12px; line-height: 16px; color: #E5484D; }
+.inv .fl-label { margin-top: 24px; font-size: 14px; line-height: 18px; font-weight: 500; color: #273945; }
+.ifl { margin-top: 16px; }
+.ifl + .ifl { border-top: 1px solid #E0E0E0; margin-top: 20px; padding-top: 20px; }
+.ifl-h { all: unset; cursor: pointer; box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: 8px; min-height: 24px; font-size: 16px; line-height: 18px; font-weight: 500; color: #273945; }
+.ifl-h span { flex: 1; }
+.ifl-h .chev { transition: transform .2s; }
+.ifl:not(.open) .ifl-h .chev { transform: rotate(180deg); }
+.ifl-rows { display: none; flex-direction: column; gap: 8px; margin-top: 16px; }
+.ifl.open .ifl-rows { display: flex; }
+.srow { display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 16px; background: #F9F9F9; }
+.srow .ico { width: 30px; height: 30px; border-radius: 7px; }
+.srow .tx { flex: 1; min-width: 0; }
+.srow b { display: block; font-size: 13px; line-height: 16px; font-weight: 500; color: #111; }
+.srow small { display: block; margin-top: 8px; font-size: 13px; line-height: 16px; color: #666; }
+.switch { all: unset; cursor: pointer; position: relative; width: 48px; height: 28px; border-radius: 14px; background: #D3D6D9; flex: none; transition: background .2s; }
+.switch::after { content: ""; position: absolute; left: 3px; top: 3px; width: 22px; height: 22px; border-radius: 11px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: transform .2s; }
+.switch[aria-checked="true"] { background: #E60000; }
+.switch[aria-checked="true"]::after { transform: translateX(20px); }
+.switch:focus-visible, .round:focus-visible, .more:focus-visible, .uhead:focus-visible, .ifl-h:focus-visible { outline: 2px solid #2F8EFF; outline-offset: 2px; }
+.inv-bar { position: absolute; left: 0; right: 0; bottom: 0; padding: 24px 22px 40px 23px; background: linear-gradient(rgba(255,255,255,0), #fff 24px); z-index: 4; }
+.btn.primary:disabled, .btn.primary[aria-disabled="true"] { background: #CDD1D4; cursor: default; }
+.sent { background: #fff; }
+.sent .plane { left: 112px; top: 309px; }
+.sent .h { left: 0; width: 375px; top: 500px; text-align: center; font-size: 20px; line-height: 26px; font-weight: 600; color: #1A1414; }
+.sent .m { left: 0; width: 375px; top: 532px; text-align: center; font-size: 14px; line-height: 20px; color: #1A1414; }
+.sent .go-on { left: 22px; width: 331px; top: 668px; height: 50px; }
+.sent .again { left: 22px; width: 331px; top: 735px; height: 44px; font-size: 16px; font-weight: 400; color: #273945; }
+
 /* ---------- app mode (installed on the phone, or ?app) ---------- */
 .app-only { display: none !important; }
 html.app, html.app body { height: 100%; overflow: hidden; overscroll-behavior: none; background: #000; }
@@ -307,7 +406,7 @@ html.app .install-hint { display: none; }
             <button class="mitem inert" style="top:170px" tabindex="-1"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>Settings</button>
             <button class="mitem inert" style="top:226px" tabindex="-1"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.2 18.4a6.5 6.5 0 0 1 11.6 0"/></svg>Profile</button>
             <button class="mitem inert" style="top:282px" tabindex="-1"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>App support</button>
-            <button class="mitem inert" style="top:338px" tabindex="-1"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 5.2a3 3 0 0 1 0 5.6M18 14.5a5.5 5.5 0 0 1 2.5 4.5"/></svg>User management</button>
+            <button class="mitem" style="top:338px" data-go="um"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 5.2a3 3 0 0 1 0 5.6M18 14.5a5.5 5.5 0 0 1 2.5 4.5"/></svg>User management</button>
             <button class="mitem" style="top:394px" data-go="scan"><span data-icon="fabDark"></span>SCADA Authentication</button>
             <div class="mline"></div>
             <button class="mitem inert" style="top:471px" tabindex="-1"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Add Functional location</button>
@@ -405,6 +504,59 @@ html.app .install-hint { display: none; }
         </template>
         <section class="screen bg-white" data-screen="pwd" data-mode="qr" aria-label="Password SCADA dal QR code"></section>
         <section class="screen bg-white" data-screen="remote" data-mode="remote" aria-label="Password SCADA da remoto"></section>
+
+        <!-- 05 User management -->
+        <section class="screen um" data-screen="um" aria-label="User management">
+          <div class="status"></div>
+          <div class="abs header"><div class="title">User management</div></div>
+          <button class="hit nav" style="left:20px;z-index:4" data-go="dash" aria-label="Indietro"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="m15 18-6-6 6-6"/></svg></button>
+          <div class="um-scroll" id="umScroll"><div class="um-inner">
+            <button class="btn-invite" data-um="invite"><svg class="i" width="32" height="32" viewBox="0 0 32 32" style="stroke-width:1"><circle cx="16" cy="16" r="10"/><path d="M16 11v10M11 16h10"/></svg>Invite user</button>
+            <div id="umList"></div>
+          </div></div>
+          <div class="um-snack" role="status" aria-live="polite"><span></span><button class="snack-x" data-um="snack-x" aria-label="Chiudi la notifica"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+          <div class="sheet-scrim" data-um="cancel"></div>
+          <div class="sheet" role="dialog" aria-modal="true">
+            <div class="ic"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="M12 12.9V8.41447M12 16.2248V16.2642M17.6699 20H6.33007C4.7811 20 3.47392 18.9763 3.06265 17.5757C2.88709 16.9778 3.10281 16.3551 3.43276 15.8249L9.10269 5.60102C10.4311 3.46632 13.5689 3.46633 14.8973 5.60103L20.5672 15.8249C20.8972 16.3551 21.1129 16.9778 20.9373 17.5757C20.5261 18.9763 19.2189 20 17.6699 20Z"/></svg></div>
+            <div class="txt"><h3 data-t></h3><p data-b></p></div>
+            <div class="btns row"><button class="btn text" data-um="cancel">Cancel</button><button class="btn primary" data-um="confirm">Remove</button></div>
+          </div>
+        </section>
+
+        <!-- 06 Invite user -->
+        <section class="screen inv" data-screen="inv" aria-label="Invite user">
+          <div class="status"></div>
+          <div class="inv-scroll" id="invScroll"><div class="inv-inner">
+            <button class="round" style="left:20px" data-inv="back" aria-label="Indietro"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button class="round" style="right:16px" data-inv="close" aria-label="Chiudi"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+            <h2>Invite user</h2>
+            <div class="sub">Allow your colleagues to access AB4YOU and its services</div>
+            <label for="invEmail">Email address</label>
+            <input id="invEmail" type="email" inputmode="email" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="name@company.com">
+            <div class="inv-err" id="invErr" hidden></div>
+            <div id="invFls" hidden>
+              <div class="fl-label">Functional Location</div>
+              <div id="invFlList"></div>
+            </div>
+          </div></div>
+          <div class="inv-bar"><button class="btn primary" style="width:100%" data-inv="invite" disabled>Invite</button></div>
+          <div class="sheet-scrim" data-inv="cancel"></div>
+          <div class="sheet" role="dialog" aria-modal="true">
+            <div class="ic"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></div>
+            <div class="txt"><h3>Confirm invitation</h3><div data-b style="font-size:14px;line-height:21px"></div></div>
+            <div class="btns row"><button class="btn text" data-inv="cancel">Cancel</button><button class="btn primary" data-inv="confirm">Invite</button></div>
+          </div>
+        </section>
+
+        <!-- 07 Invitation sent -->
+        <section class="screen sent" data-screen="sent" aria-label="Invito inviato">
+          <div class="status"></div>
+          <svg class="abs plane" width="105" height="63" viewBox="0 0 105 63" fill="#E60000" aria-hidden="true"><path d="M0 1 104 15 14 25Z"/><path d="M20 33 101 17 36 62Z"/></svg>
+          <div class="abs h">Invitation sent to</div>
+          <div class="abs m" id="sentTo"></div>
+          <button class="hit btn primary go-on" data-inv="continue">Continue</button>
+          <button class="hit again" data-inv="again">Invite a new user</button>
+        </section>
       </div>
     </div>
   </div>
@@ -446,6 +598,25 @@ html.app .install-hint { display: none; }
         <li><button data-jump="pwd"><span class="code">03</span>Password · in presenza</button></li>
         <li><button data-jump="remote"><span class="code">03R</span>Password · da remoto</button></li>
       </ul>
+    </div>
+
+    <div class="block">
+      <h2>User management</h2>
+      <div class="seg" role="group" aria-label="Utenti presenti">
+        <button data-um-set="empty" aria-pressed="false">Nessun invitato</button>
+        <button data-um-set="full" aria-pressed="true">Ci sono invitati</button>
+      </div>
+      <ul class="steps">
+        <li><button data-jump="um"><span class="code">UM</span>User management</button></li>
+        <li><button data-jump="inv"><span class="code">IU</span>Invite user</button></li>
+      </ul>
+      <div class="note">Dal menu tocca <strong>User management</strong>. Tocca la testata di un utente per aprire o chiudere la card, <strong>Collapse all / Expand all</strong> per tutte, il ⋮ di una location per attivare o disattivare i servizi o rimuovere l'utente da quella location. Le notifiche spariscono dopo 3 s o toccando la X.</div>
+      <div class="note">Scrivi un'email nell'invito, oppure usa un esempio:</div>
+      <div class="seg" role="group" aria-label="Esempi di email">
+        <button data-fill="marco.debernardi@gmail.com" aria-pressed="false">Email valida</button>
+        <button data-fill="MarcoDebernardi@gmail.om" aria-pressed="false">Formato errato</button>
+        <button data-fill="bianca.rossi@abgroup.com" aria-pressed="false">Già invitato</button>
+      </div>
     </div>
 
     <div class="block">
@@ -560,8 +731,10 @@ html.app .install-hint { display: none; }
     sec.classList.remove('sheet-open');
   }
 
+  const onEnter = {};
   function go(name) {
     if (name === '@scan' || name === 'scan') name = camVariant;
+    if (onEnter[name] && name !== current) onEnter[name]();
     const dash = $('[data-screen="dash"]');
     dash.classList.toggle('menu-open', name === 'menu');
     if (name === 'menu') name = 'dash';
@@ -577,7 +750,7 @@ html.app .install-hint { display: none; }
     });
     current = name;
     const key = name === 'scanAlt' ? 'scan' : (name === 'dash' && dash.classList.contains('menu-open') ? 'menu' : name);
-    $$('#steps [data-jump]').forEach(b => b.setAttribute('aria-current', String(b.dataset.jump === key)));
+    $$('.steps [data-jump]').forEach(b => b.setAttribute('aria-current', String(b.dataset.jump === key)));
   }
 
   function setLoading(sec, on) {
@@ -673,6 +846,224 @@ html.app .install-hint { display: none; }
   }, { passive: true });
   vDark.addEventListener('click', () => setVariant('scan'));
   vAlt.addEventListener('click', () => setVariant('scanAlt'));
+
+  // ---------- user management ----------
+  const FL_NAMES = { '00105': '00105 - Emissione Zero Tech Rossi', '00123': '00123 - Valorizzazione ambientale' };
+  const SVC = { ab: 'AB4YOU Services', scada: 'SCADA Authentication' };
+  const SVC_DESC = { ab: 'Grant access to plant data, documents, and services.', scada: 'Enable secure authentication to the SCADA desktop application through the AB4YOU app' };
+  const UI = {
+    chevUp: '<svg class="i chev" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="m6 15 6-6 6 6"/></svg>',
+    user: '<svg class="i" width="20" height="20" viewBox="0 0 24 24" style="stroke-width:1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>',
+    pin: '<svg class="i" width="16" height="16" viewBox="0 0 24 24" style="stroke-width:1.5;flex:none"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+    more: '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>',
+    mail: '<svg class="i" width="16" height="16" viewBox="0 0 24 24" style="stroke-width:1.5"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+    phone: '<svg class="i" width="16" height="16" viewBox="0 0 24 24" style="stroke-width:1.5"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>',
+    ab: '<svg class="i" width="18" height="18" viewBox="0 0 24 24" style="stroke-width:1.5"><rect x="4" y="4" width="6" height="6" rx="2"/><rect x="14" y="4" width="6" height="6" rx="2"/><rect x="4" y="14" width="6" height="6" rx="2"/><rect x="14" y="14" width="6" height="6" rx="2"/></svg>',
+    scada: '<svg class="i" width="18" height="18" viewBox="0 0 24 24" style="stroke-width:1.5"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg>',
+    trash: '<svg class="i" width="20" height="20" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>',
+    minus: '<svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>',
+    plus: '<svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>',
+    collapse: '<svg class="i" width="16" height="16" viewBox="0 0 16 16" style="stroke-width:1.5"><path d="m5 3 3 3 3-3M5 13l3-3 3 3"/></svg>',
+    expand: '<svg class="i" width="16" height="16" viewBox="0 0 16 16" style="stroke-width:1.5"><path d="m5 6 3-3 3 3M5 10l3 3 3-3"/></svg>',
+  };
+  const seedUsers = () => [
+    { email: 'Bianca.rossi@abgroup.com', open: true, fls: [
+      { id: '00105', via: 'invite', svc: { ab: true, scada: false } },
+      { id: '00123', via: 'code', svc: { ab: true, scada: true } } ] },
+    { email: 'Paolo.rossi@abgroup.com', open: true, fls: [
+      { id: '00105', via: 'invite', svc: { ab: true, scada: false } },
+      { id: '00123', via: 'invite', svc: { ab: true, scada: false } } ] },
+  ];
+  let users = seedUsers();
+  let menuAt = null;      // "userIndex:flIndex" of the open ⋮ menu
+  let pending = null;     // action waiting for the dialog
+  const umSec = $('[data-screen="um"]');
+  const esc = t => t.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+  const firstName = email => { const n = email.split(/[.@]/)[0]; return n.charAt(0).toUpperCase() + n.slice(1); };
+
+  function renderUM() {
+    const list = $('#umList');
+    if (!users.length) { list.innerHTML = ''; return; }
+    const anyOpen = users.some(u => u.open);
+    list.innerHTML = `
+      <div class="um-row"><div class="t">Users <span>· ${users.length}</span></div>
+        <button class="toggle-all" data-um="all">${anyOpen ? 'Collapse all' + UI.collapse : 'Expand all' + UI.expand}</button></div>
+      <div class="ucards">${users.map((u, i) => {
+        const active = u.fls.reduce((n, f) => n + Object.values(f.svc).filter(Boolean).length, 0);
+        return `<div class="ucard${u.open ? ' open' : ''}">
+          <button class="uhead" data-um="card" data-u="${i}" aria-expanded="${u.open}">
+            <span class="avatar">${UI.user}</span>
+            <span class="uid"><span class="e" style="display:block">${esc(u.email)}</span><span class="s" style="display:block">${plural(u.fls.length, 'location', 'locations')} · ${plural(active, 'active service', 'active services')}</span></span>
+            ${UI.chevUp}
+          </button>
+          <div class="ubody"><div class="fls">${u.fls.map((f, j) => {
+            const on = Object.keys(SVC).filter(k => f.svc[k]);
+            const open = menuAt === `${i}:${j}`;
+            return `<div class="fl">
+              <div class="flh">${UI.pin}<span class="nm">${FL_NAMES[f.id]}</span>
+                <button class="more" data-um="more" data-u="${i}" data-f="${j}" aria-label="Azioni per ${f.id}" aria-expanded="${open}">${UI.more}</button>
+                ${open ? `<div class="fl-menu" role="menu">${Object.keys(SVC).map(k => f.svc[k]
+                    ? `<button role="menuitem" data-um="svc" data-k="${k}" data-u="${i}" data-f="${j}">${UI.minus}Disable ${SVC[k]}</button>`
+                    : `<button role="menuitem" data-um="svc" data-k="${k}" data-u="${i}" data-f="${j}">${UI.plus}Enable ${SVC[k]}</button>`).join('')}
+                  <hr><button role="menuitem" class="danger" data-um="rm-fl" data-u="${i}" data-f="${j}">${UI.trash}Remove from this location</button></div>` : ''}
+              </div>
+              <div><span class="chip">${f.via === 'invite' ? UI.mail + 'Joined via invite' : UI.phone + 'Joined via FL code'}</span></div>
+              ${on.length ? `<div class="svcs">${on.map(k => `<div class="svc"><span class="ico">${UI[k]}</span>${SVC[k]}</div>`).join('')}</div>`
+                          : '<div class="svcs none">No services enabled on this location yet.</div>'}
+            </div>`; }).join('')}</div>
+            <div class="ufoot"><button class="rm-user" data-um="rm-user" data-u="${i}">${UI.trash}Remove user</button></div>
+          </div>
+        </div>`; }).join('')}</div>`;
+  }
+
+  function umSnack(msg) {
+    const s = $('.um-snack', umSec);
+    $('span', s).textContent = msg;
+    s.classList.remove('show'); void s.offsetWidth; s.classList.add('show');
+    later('umSnack', 3000, () => s.classList.remove('show'));
+  }
+
+  function umDialog(title, body, action) {
+    pending = action;
+    $('[data-t]', umSec).textContent = title;
+    $('[data-b]', umSec).textContent = body;
+    umSec.classList.add('sheet-open');
+  }
+
+  umSec.addEventListener('click', e => {
+    const t = e.target.closest('[data-um]');
+    if (menuAt && !(t && ['svc', 'rm-fl', 'more'].includes(t.dataset.um))) { menuAt = null; renderUM(); if (!t) return; }
+    if (!t) return;
+    const u = users[+t.dataset.u], f = u && u.fls[+t.dataset.f];
+    switch (t.dataset.um) {
+      case 'invite': go('inv'); break;
+      case 'card': u.open = !u.open; renderUM(); break;
+      case 'all': { const open = !users.some(x => x.open); users.forEach(x => x.open = open); renderUM(); break; }
+      case 'more': { const key = `${t.dataset.u}:${t.dataset.f}`; menuAt = menuAt === key ? null : key; renderUM(); break; }
+      case 'svc': {
+        const k = t.dataset.k; f.svc[k] = !f.svc[k]; menuAt = null; renderUM();
+        umSnack(`${SVC[k]} ${f.svc[k] ? 'enabled' : 'disabled'}`); break;
+      }
+      case 'rm-fl':
+        menuAt = null; renderUM();
+        umDialog(`Remove from ${f.id}?`, `${u.email} will lose access to ${FL_NAMES[f.id]} and its services. You can send a new invite at any time.`, () => {
+          u.fls.splice(+t.dataset.f, 1);
+          if (!u.fls.length) users.splice(+t.dataset.u, 1);
+          renderUM(); umSnack(`${firstName(u.email)} removed from ${f.id}`);
+        });
+        break;
+      case 'rm-user':
+        umDialog('Remove this user?', `${u.email} will lose access to all functional locations and services. To give access again, you’ll need to send a new invite.`, () => {
+          users.splice(+t.dataset.u, 1); renderUM(); umSnack('User removed');
+        });
+        break;
+      case 'cancel': umSec.classList.remove('sheet-open'); pending = null; break;
+      case 'confirm': umSec.classList.remove('sheet-open'); if (pending) pending(); pending = null; break;
+      case 'snack-x': $('.um-snack', umSec).classList.remove('show'); break;
+    }
+  });
+
+  function setUsers(mode) {
+    users = mode === 'empty' ? [] : seedUsers();
+    menuAt = null; renderUM();
+    $$('[data-um-set]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.umSet === mode)));
+  }
+  $$('[data-um-set]').forEach(b => b.addEventListener('click', () => { setUsers(b.dataset.umSet); go('um'); }));
+  onEnter.um = () => { menuAt = null; umSec.classList.remove('sheet-open'); $('.um-snack', umSec).classList.remove('show'); renderUM(); $('#umScroll').scrollTop = 0; };
+
+  // ---------- invite user ----------
+  const invSec = $('[data-screen="inv"]');
+  const invEmail = $('#invEmail'), invErr = $('#invErr'), invBtn = $('[data-inv="invite"]', invSec);
+  const TLDS = ['com', 'it', 'net', 'org', 'eu', 'io', 'de', 'fr', 'es', 'ch', 'at', 'co', 'uk', 'info', 'biz'];
+  let invStep = 1, invSel = {};
+
+  function emailOk(v) {
+    const m = v.trim().match(/^[^ @]+@[^ @]+[.]([a-z]+)$/i);
+    return !!m && TLDS.includes(m[1].toLowerCase());
+  }
+  function invRefresh() {
+    if (invStep === 1) invBtn.disabled = !invEmail.value.trim() || !invErr.hidden;
+    else invBtn.disabled = !Object.values(invSel).some(s => s.ab || s.scada);
+  }
+  function setInvErr(msg) {
+    invErr.hidden = !msg; invErr.textContent = msg || '';
+    invEmail.classList.toggle('err', !!msg); invRefresh();
+  }
+  function renderInvFls() {
+    $('#invFlList').innerHTML = Object.keys(FL_NAMES).map(id => `
+      <div class="ifl${invSel[id].open ? ' open' : ''}">
+        <button class="ifl-h" data-inv="fl" data-id="${id}" aria-expanded="${invSel[id].open}">${UI.pin}<span>${FL_NAMES[id]}</span>${UI.chevUp}</button>
+        <div class="ifl-rows">${Object.keys(SVC).map(k => `
+          <div class="srow"><span class="ico">${UI[k]}</span><span class="tx"><b>${SVC[k]}</b><small>${SVC_DESC[k]}</small></span>
+            <button class="switch" role="switch" aria-checked="${invSel[id][k]}" aria-label="${SVC[k]} · ${id}" data-inv="sw" data-id="${id}" data-k="${k}"></button></div>`).join('')}
+        </div>
+      </div>`).join('');
+  }
+  function resetInvite(email) {
+    invStep = 1;
+    invSel = Object.fromEntries(Object.keys(FL_NAMES).map(id => [id, { open: true, ab: false, scada: false }]));
+    invEmail.value = email || ''; invEmail.readOnly = false;
+    $('#invFls').hidden = true;
+    $('[data-inv="back"]', invSec).hidden = false;
+    invSec.classList.remove('sheet-open');
+    setInvErr('');
+    $('#invScroll').scrollTop = 0;
+  }
+  onEnter.inv = () => resetInvite();
+
+  invEmail.addEventListener('input', () => setInvErr(''));
+  invEmail.addEventListener('keydown', e => { if (e.key === 'Enter' && !invBtn.disabled) invBtn.click(); });
+
+  invSec.addEventListener('click', e => {
+    const t = e.target.closest('[data-inv]'); if (!t) return;
+    switch (t.dataset.inv) {
+      case 'back': case 'close': go('um'); break;
+      case 'invite':
+        if (invStep === 1) {
+          const v = invEmail.value.trim();
+          if (!emailOk(v)) return setInvErr('Incorrect email format');
+          if (users.some(u => u.email.toLowerCase() === v.toLowerCase())) return setInvErr('This user has already been invited.');
+          invStep = 2; invEmail.readOnly = true; invEmail.blur();
+          $('[data-inv="back"]', invSec).hidden = true;
+          $('#invFls').hidden = false; renderInvFls(); invRefresh();
+        } else {
+          const picked = Object.keys(FL_NAMES).filter(id => invSel[id].ab || invSel[id].scada);
+          const svcs = id => Object.keys(SVC).filter(k => invSel[id][k]).map(k => `<li>${SVC[k]}</li>`).join('');
+          $('[data-b]', invSec).innerHTML = picked.length === 1
+            ? `You are about to invite ${esc(invEmail.value.trim())} to ${FL_NAMES[picked[0]]}.<br>The user will have access to:<ul>${svcs(picked[0])}</ul>`
+            : `You are about to invite ${esc(invEmail.value.trim())} to:<ul>${picked.map(id => `<li>${FL_NAMES[id]}<ul>${svcs(id)}</ul></li>`).join('')}</ul>`;
+          invSec.classList.add('sheet-open');
+        }
+        break;
+      case 'fl': invSel[t.dataset.id].open = !invSel[t.dataset.id].open; renderInvFls(); break;
+      case 'sw': { const s = invSel[t.dataset.id]; s[t.dataset.k] = !s[t.dataset.k]; t.setAttribute('aria-checked', String(s[t.dataset.k])); invRefresh(); break; }
+      case 'cancel': invSec.classList.remove('sheet-open'); break;
+      case 'confirm':
+        invSec.classList.remove('sheet-open');
+        $('#sentTo').textContent = invEmail.value.trim();
+        go('sent');
+        break;
+    }
+  });
+
+  $('[data-screen="sent"]').addEventListener('click', e => {
+    const t = e.target.closest('[data-inv]'); if (!t) return;
+    if (t.dataset.inv === 'continue') {
+      const email = $('#sentTo').textContent;
+      users.push({ email, open: true, fls: Object.keys(FL_NAMES).map(id => ({ id, via: 'invite', svc: { ab: invSel[id].ab, scada: invSel[id].scada } })) });
+      users.sort((a, b) => a.email.toLowerCase().localeCompare(b.email.toLowerCase()));
+      users.forEach(u => u.open = true);
+      go('um');
+    } else if (t.dataset.inv === 'again') go('inv');
+  });
+
+  $$('[data-fill]').forEach(b => b.addEventListener('click', () => {
+    if (current !== 'inv') go('inv');
+    resetInvite(b.dataset.fill);
+    invRefresh();
+  }));
+  renderUM();
 
   // fit the phone to the window
   const slot = document.getElementById('slot'), bezel = document.getElementById('bezel');
