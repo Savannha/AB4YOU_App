@@ -138,19 +138,19 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
 .err-inline { left: 20px; top: 522px; width: 335px; box-sizing: border-box; background: #fff; border-radius: 12px; padding: 12px 16px 12px 12px; display: flex; gap: 12px; color: #1A1414;
   opacity: 0; transform: translateY(6px); transition: opacity .2s, transform .2s; pointer-events: none; }
 .err-inline.show { opacity: 1; transform: none; }
-.err-inline svg { color: #E60000; flex: none; }
+.err-inline svg { color: #273945; flex: none; }
 .err-inline b { display: block; font-size: 16px; line-height: 22px; font-weight: 600; }
 .err-inline span { display: block; font-size: 14px; line-height: 20px; color: #4B5563; margin-top: 2px; }
 .sheet-scrim { position: absolute; inset: 0; background: rgba(0,0,0,.6); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 10; }
-.sheet { position: absolute; left: 0; bottom: 0; width: 375px; box-sizing: border-box; background: #fff; border-radius: 20px 20px 0 0; padding: 12px 20px 34px; z-index: 11;
-  display: flex; flex-direction: column; align-items: center; gap: 16px; transform: translateY(100%); transition: transform .28s cubic-bezier(.2,.8,.2,1); }
+.sheet { position: absolute; left: 24px; top: 50%; width: 327px; box-sizing: border-box; background: #fff; border-radius: 20px; padding: 0 0 30px; z-index: 11; color: #273945;
+  display: flex; flex-direction: column; opacity: 0; transform: translateY(-50%) scale(.96); pointer-events: none; transition: opacity .2s, transform .2s; }
 .sheet-open .sheet-scrim { opacity: 1; pointer-events: auto; }
-.sheet-open .sheet { transform: none; }
-.sheet .handle { width: 36px; height: 4px; border-radius: 2px; background: #D5D4D4; }
-.sheet .ic { width: 56px; height: 56px; border-radius: 28px; display: flex; align-items: center; justify-content: center; }
-.sheet h3 { margin: 0; font-size: 20px; line-height: 26px; font-weight: 600; color: #000; text-align: center; }
-.sheet p { margin: -8px 0 0; font-size: 16px; line-height: 22px; color: #4B5563; text-align: center; }
-.sheet .btns { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.sheet-open .sheet { opacity: 1; transform: translateY(-50%); pointer-events: auto; }
+.sheet .ic { height: 56px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #C1C6C9; color: #273945; }
+.sheet .txt { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.sheet h3 { margin: 0; font-size: 20px; line-height: 30px; font-weight: 500; }
+.sheet p { margin: 0; font-size: 14px; line-height: 21px; }
+.sheet .btns { display: flex; flex-direction: column; gap: 12px; padding: 0 24px; }
 .btn { all: unset; cursor: pointer; box-sizing: border-box; height: 50px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 18px; font-weight: 500; }
 .btn.primary { background: #273945; color: #fff; }
 .btn.outline { border: 1px solid #273945; color: #273945; background: #fff; }
@@ -263,7 +263,7 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
             <button data-copy="AB123456" data-msg="Username copiato negli appunti" aria-label="Copia username"><svg class="i" width="16" height="16" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg></button>
           </div>
           <div class="abs cam-hint">Inquadra il QR code nella finestra di login dello SCADA</div>
-          <div class="abs err-inline" role="alert"><svg class="i" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/></svg><div><b>QR code non riconosciuto</b><span>Non è un QR code dello SCADA. Inquadra quello nella finestra di login.</span></div></div>
+          <div class="abs err-inline" role="alert"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="M12 12.9V8.41447M12 16.2248V16.2642M17.6699 20H6.33007C4.7811 20 3.47392 18.9763 3.06265 17.5757C2.88709 16.9778 3.10281 16.3551 3.43276 15.8249L9.10269 5.60102C10.4311 3.46632 13.5689 3.46633 14.8973 5.60103L20.5672 15.8249C20.8972 16.3551 21.1129 16.9778 20.9373 17.5757C20.5261 18.9763 19.2189 20 17.6699 20Z"/></svg><div><b>QR code non riconosciuto</b><span>Non è un QR code dello SCADA. Inquadra quello nella finestra di login.</span></div></div>
           <button class="hit remote-dark" data-go="remote"><svg class="i" width="20" height="20" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>Sei da remoto? Incolla il codice</button>
           <div class="abs snack light"><svg class="i" width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span></span></div>
           <div class="sheet-host"></div>
@@ -288,7 +288,7 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
             </button>
             <button class="hit glass flash-btn" style="left:283px;top:16px" data-flash data-state="off" aria-label="Flash: disattivato"></button>
           </div>
-          <div class="abs err-inline" style="top:625px" role="alert"><svg class="i" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/></svg><div><b>QR code non riconosciuto</b><span>Non è un QR code dello SCADA. Inquadra quello nella finestra di login.</span></div></div>
+          <div class="abs err-inline" style="top:625px" role="alert"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="M12 12.9V8.41447M12 16.2248V16.2642M17.6699 20H6.33007C4.7811 20 3.47392 18.9763 3.06265 17.5757C2.88709 16.9778 3.10281 16.3551 3.43276 15.8249L9.10269 5.60102C10.4311 3.46632 13.5689 3.46633 14.8973 5.60103L20.5672 15.8249C20.8972 16.3551 21.1129 16.9778 20.9373 17.5757C20.5261 18.9763 19.2189 20 17.6699 20Z"/></svg><div><b>QR code non riconosciuto</b><span>Non è un QR code dello SCADA. Inquadra quello nella finestra di login.</span></div></div>
           <div class="abs alt-hint">Non sei davanti al PC con lo SCADA?</div>
           <button class="hit remote-light" data-go="remote"><svg class="i" width="28" height="28" viewBox="0 0 24 24" style="stroke-width:1.5"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>Sei da remoto? Incolla il codice</button>
           <div class="sheet-host"></div>
@@ -298,10 +298,8 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
         <template id="sheet-tpl">
           <div class="sheet-scrim"></div>
           <div class="sheet" role="dialog" aria-modal="true">
-            <div class="handle"></div>
-            <div class="ic" data-ic></div>
-            <h3 data-t></h3>
-            <p data-b></p>
+            <div class="ic"><svg class="i" width="24" height="24" viewBox="0 0 24 24" style="stroke-width:1.5"><path d="M12 12.9V8.41447M12 16.2248V16.2642M17.6699 20H6.33007C4.7811 20 3.47392 18.9763 3.06265 17.5757C2.88709 16.9778 3.10281 16.3551 3.43276 15.8249L9.10269 5.60102C10.4311 3.46632 13.5689 3.46633 14.8973 5.60103L20.5672 15.8249C20.8972 16.3551 21.1129 16.9778 20.9373 17.5757C20.5261 18.9763 19.2189 20 17.6699 20Z"/></svg></div>
+            <div class="txt"><h3 data-t></h3><p data-b></p></div>
             <div class="btns"><button class="btn primary" data-sheet="retry"></button><button class="btn outline" data-go="dash">Chiudi</button></div>
           </div>
         </template>
@@ -349,10 +347,10 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
       <div class="seg" role="group" aria-label="Esito simulato della lettura del QR code">
         <button data-outcome="ok" aria-pressed="true">QR valido</button>
         <button data-outcome="unknown" aria-pressed="false">Non riconosciuto</button>
-        <button data-outcome="unauthorized" aria-pressed="false">Impianto non autorizzato</button>
+        <button data-outcome="unauthorized" aria-pressed="false">Accesso non autorizzato</button>
         <button data-outcome="expired" aria-pressed="false">Scaduto <span class="tbc">TBC</span></button>
       </div>
-      <div class="note">Scegli l'esito, poi tocca il mirino. Non riconosciuto mostra un avviso che sparisce dopo 3 s; gli altri due aprono un pannello.</div>
+      <div class="note">Scegli l'esito, poi tocca il mirino. Non riconosciuto mostra un avviso che sparisce dopo 3 s; gli altri due aprono una modale.</div>
     </div>
 
     <div class="block">
@@ -427,17 +425,13 @@ svg.i { display: block; fill: none; stroke: currentColor; stroke-width: 2; strok
 
   // error sheets
   const SHEETS = {
-    unauthorized: { icBg: '#FCEEEE', icCol: '#E60000', icon: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
-      title: 'Impianto non autorizzato', body: 'Questo QR code appartiene a un impianto per cui il tuo utente non è abilitato. Se pensi che sia un errore, contatta il supporto.', retry: 'Scansiona un altro QR code' },
-    expired: { icBg: '#FFF4DC', icCol: '#8A5A00', icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
-      title: 'QR code scaduto', body: 'Il QR code vale 90 secondi. Nello SCADA premi Rigenera e inquadra il nuovo QR code.', retry: 'Scansiona di nuovo' }
+    unauthorized: { title: 'Accesso non autorizzato', body: 'Non hai i permessi per accedere a questo impianto.', retry: 'Scansiona un altro QR code' },
+    expired: { title: 'QR code scaduto', body: 'Premi «Rigenera» nello SCADA e inquadra il nuovo QR code.', retry: 'Scansiona di nuovo' }
   };
   const sheetTpl = document.getElementById('sheet-tpl');
   $$('.sheet-host').forEach(h => h.replaceWith(sheetTpl.content.cloneNode(true)));
   function openSheet(sec, kind) {
     const k = SHEETS[kind];
-    const ic = $('[data-ic]', sec); ic.style.background = k.icBg; ic.style.color = k.icCol;
-    ic.innerHTML = `<svg class="i" width="32" height="32" viewBox="0 0 24 24">${k.icon}</svg>`;
     $('[data-t]', sec).textContent = k.title; $('[data-b]', sec).textContent = k.body;
     $('[data-sheet="retry"]', sec).textContent = k.retry;
     sec.classList.add('sheet-open');
